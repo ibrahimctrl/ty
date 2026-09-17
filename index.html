@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ABUMOUSA</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html,body{
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    background:#000;
+    font-family:Consolas,monospace;
+}
+
+/* ================= VIDEO ================= */
+
+#bgVideo{
+    position:fixed;
+    top:0;
+    left:0;
+
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
+
+    z-index:0;
+}
+
+/* ================= DARK OVERLAY ================= */
+
+.overlay{
+    position:fixed;
+    inset:0;
+
+    background:rgba(0,0,0,.38);
+
+    z-index:1;
+    pointer-events:none;
+}
+
+/* ================= RED EFFECT ================= */
+
+.red-effect{
+    position:fixed;
+    inset:0;
+
+    z-index:2;
+    pointer-events:none;
+
+    background:
+        radial-gradient(
+            ellipse at top,
+            rgba(255,0,0,.28),
+            transparent 45%
+        );
+
+    box-shadow:
+        inset 0 30px 90px rgba(255,0,0,.35),
+        inset 25px 0 70px rgba(150,0,0,.18),
+        inset -25px 0 70px rgba(150,0,0,.18);
+
+    animation:redPulse 3s infinite;
+}
+
+/* ================= RED DROPS ================= */
+
+.liquid{
+    position:absolute;
+    top:0;
+    left:0;
+
+    width:100%;
+    height:200px;
+}
+
+.drop{
+    position:absolute;
+    top:-30px;
+
+    width:var(--w);
+    height:var(--h);
+
+    background:linear-gradient(
+        to bottom,
+        rgba(255,20,20,.9),
+        rgba(120,0,0,.55)
+    );
+
+    border-radius:0 0 50% 50%;
+
+    box-shadow:
+        0 0 10px rgba(255,0,0,.3);
+
+    animation:fall var(--speed) infinite ease-in;
+    animation-delay:var(--delay);
+}
+
+.drop:nth-child(1){
+    left:8%;
+    --w:11px;
+    --h:80px;
+    --speed:4s;
+    --delay:.3s;
+}
+
+.drop:nth-child(2){
+    left:23%;
+    --w:7px;
+    --h:55px;
+    --speed:3.5s;
+    --delay:1s;
+}
+
+.drop:nth-child(3){
+    left:42%;
+    --w:13px;
+    --h:100px;
+    --speed:4.5s;
+    --delay:.5s;
+}
+
+.drop:nth-child(4){
+    left:61%;
+    --w:8px;
+    --h:65px;
+    --speed:3.8s;
+    --delay:1.5s;
+}
+
+.drop:nth-child(5){
+    left:80%;
+    --w:12px;
+    --h:90px;
+    --speed:4.2s;
+    --delay:.8s;
+}
+
+.drop:nth-child(6){
+    left:94%;
+    --w:9px;
+    --h:70px;
+    --speed:3.7s;
+    --delay:1.3s;
+}
+
+/* ================= TITLE ================= */
+
+.title{
+    position:absolute;
+
+    top:45px;
+    left:0;
+
+    width:100%;
+
+    text-align:center;
+
+    color:#c40000;
+
+    font-size:55px;
+    font-weight:bold;
+
+    letter-spacing:3px;
+
+    text-shadow:
+        0 0 7px #ff0000,
+        0 0 18px #b00000,
+        0 0 35px #650000;
+
+    animation:glitch .8s infinite;
+
+    z-index:4;
+}
+
+/* ================= PANEL ================= */
+
+.panel{
+    position:absolute;
+
+    left:50%;
+    top:56%;
+
+    transform:translate(-50%,-50%);
+
+    width:650px;
+    height:300px;
+
+    padding:30px;
+
+    background:rgba(0,0,0,.50);
+
+    backdrop-filter:blur(8px);
+    -webkit-backdrop-filter:blur(8px);
+
+    border:1px solid rgba(255,0,0,.55);
+
+    box-shadow:
+        0 0 25px rgba(255,0,0,.3),
+        inset 0 0 30px rgba(255,0,0,.08);
+
+    z-index:3;
+}
+
+/* ================= INFO ================= */
+
+.info{
+    color:#ff0000;
+
+    font-size:24px;
+
+    line-height:1.7;
+
+    text-shadow:
+        0 0 6px #ff0000,
+        0 0 12px rgba(255,0,0,.5);
+}
+
+.label{
+    color:white;
+    font-weight:bold;
+}
+
+/* ================= ANIMATIONS ================= */
+
+@keyframes fall{
+
+    0%{
+        transform:translateY(-40px);
+        opacity:0;
+    }
+
+    15%{
+        opacity:1;
+    }
+
+    70%{
+        transform:translateY(90px);
+        opacity:.85;
+    }
+
+    100%{
+        transform:translateY(170px);
+        opacity:0;
+    }
+}
+
+@keyframes redPulse{
+
+    0%,100%{
+        opacity:.65;
+    }
+
+    50%{
+        opacity:1;
+    }
+}
+
+@keyframes glitch{
+
+    0%,100%{
+        transform:translate(0);
+    }
+
+    20%{
+        transform:translate(-2px,1px);
+    }
+
+    40%{
+        transform:translate(2px,-1px);
+    }
+
+    60%{
+        transform:translate(-1px,2px);
+    }
+
+    80%{
+        transform:translate(1px,-2px);
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- VIDEO -->
+<video id="bgVideo" autoplay muted loop playsinline>
+    <source src="video.mp4" type="video/mp4">
+</video>
+
+<!-- SOUND -->
+<audio id="sound" autoplay loop>
+    <source src="sound.mp3" type="audio/mpeg">
+</audio>
+
+<!-- OVERLAY -->
+<div class="overlay"></div>
+
+<!-- RED EFFECT -->
+<div class="red-effect">
+
+    <div class="liquid">
+
+        <div class="drop"></div>
+        <div class="drop"></div>
+        <div class="drop"></div>
+        <div class="drop"></div>
+        <div class="drop"></div>
+        <div class="drop"></div>
+
+    </div>
+
+</div>
+
+<!-- TITLE -->
+<div class="title">
+    FUCKED BY ABUMOUSA
+</div>
+
+<!-- PANEL -->
+<div class="panel">
+
+    <div class="info">
+
+        <span class="label">IP ADDRESS:</span>
+        127.0.0.1
+        <br>
+
+        <span class="label">COUNTRY:</span>
+        JORDAN
+        <br>
+
+        <span class="label">NETWORK:</span>
+        NETWORK
+        <br>
+
+        <span class="label">ISP:</span>
+        FIBER CONNECTION
+        <br>
+
+        <span class="label">STATUS:</span>
+        ONLINE
+        <br>
+
+        <span class="label">SYSTEM:</span>
+        WINDOWS
+
+    </div>
+
+</div>
+
+<script>
+
+const video = document.getElementById("bgVideo");
+const sound = document.getElementById("sound");
+
+/* VIDEO */
+video.play().catch(() => {
+    console.log("Video autoplay blocked");
+});
+
+/* SOUND */
+sound.volume = 0.5;
+
+sound.play().catch(() => {
+    console.log("Browser blocked automatic sound");
+});
+
+</script>
+
+</body>
+</html>
